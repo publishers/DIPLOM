@@ -1,4 +1,4 @@
-# DIPLOM C5
+# DIPLOM segmentation of images
 
 
 This work is about segmentation of images. 
