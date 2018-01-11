@@ -1,66 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="983.0" stylesheets="@css.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0"
+            prefWidth="983.0" stylesheets="@css.css" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
     <children>
-        <MenuBar fx:id="tabColorImage" layoutY="2.0" prefHeight="25.0" prefWidth="983.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MenuBar fx:id="tabColorImage" layoutY="2.0" prefHeight="25.0" prefWidth="983.0" AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                  <RadioMenuItem fx:id="isOpenFileColorImage" mnemonicParsing="false" text="Color Image" />
-                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open File" />
-                        <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+                        <RadioMenuItem fx:id="isOpenFileColorImage" mnemonicParsing="false" text="Color Image"/>
+                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open File"/>
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="Close"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="OTSU's method">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#var1" text="var1" />
-                        <MenuItem mnemonicParsing="false" onAction="#var2" text="var2" />
-                        <MenuItem mnemonicParsing="false" onAction="#var3" text="var3" />
-                        <MenuItem mnemonicParsing="false" onAction="#var4" text="Some Thresholds" />
-                        <MenuItem mnemonicParsing="false" onAction="#var5" text="var5" />
+                        <MenuItem mnemonicParsing="false" onAction="#var1" text="var1"/>
+                        <MenuItem mnemonicParsing="false" onAction="#var2" text="var2"/>
+                        <MenuItem mnemonicParsing="false" onAction="#var3" text="var3"/>
+                        <MenuItem mnemonicParsing="false" onAction="#var4" text="Some Thresholds"/>
+                        <MenuItem mnemonicParsing="false" onAction="#var5" text="var5"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Bernsen's method">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#bernsenMethod" text="start" />
+                        <MenuItem mnemonicParsing="false" onAction="#bernsenMethod" text="start"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Set Image for Skeleton">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#setImageOfBerns" text="Image of Berns" />
-                        <MenuItem mnemonicParsing="false" onAction="#setImageOfOtsu" text="Image of Otsu" />
-                        <MenuItem mnemonicParsing="false" onAction="#recognitionTheImage" text="Recognition the Image" />
-                        <CheckMenuItem fx:id="saveSkeletonToDB" mnemonicParsing="false" text="Save Skeleton To DB" />
+                        <MenuItem mnemonicParsing="false" onAction="#setImageOfBerns" text="Image of Berns"/>
+                        <MenuItem mnemonicParsing="false" onAction="#setImageOfOtsu" text="Image of Otsu"/>
+                        <MenuItem mnemonicParsing="false" onAction="#recognitionTheImage" text="Recognition the Image"/>
+                        <CheckMenuItem fx:id="saveSkeletonToDB" mnemonicParsing="false" text="Save Skeleton To DB"/>
                     </items>
                 </Menu>
-            <Menu mnemonicParsing="false" text="Segmentation Of Color Image ">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#doKMeansMethod" text="K-mens" />
-                  <MenuItem mnemonicParsing="false" onAction="#doWatershedMethod" text="Watershed" />
-                  <MenuItem mnemonicParsing="false" onAction="#doWatershedMethodWithoutImage" text="Watershed Without image" />
-              </items>
-            </Menu>
+                <Menu mnemonicParsing="false" text="Segmentation Of Color Image ">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#doKMeansMethod" text="K-mens"/>
+                        <MenuItem mnemonicParsing="false" onAction="#doWatershedMethod" text="Watershed"/>
+                        <MenuItem mnemonicParsing="false" onAction="#doWatershedMethodWithoutImage"
+                                  text="Watershed Without image"/>
+                    </items>
+                </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" text="About"/>
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane layoutY="25.0" prefHeight="572.0" prefWidth="983.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <TabPane layoutY="25.0" prefHeight="572.0" prefWidth="983.0" tabClosingPolicy="UNAVAILABLE"
+                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                 AnchorPane.topAnchor="25.0">
             <tabs>
                 <Tab text="Image">
                     <content>
                         <AnchorPane>
                             <children>
-                                <ImageView fx:id="whiteBlack" fitHeight="470.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="10.0" />
-                                <ImageView fx:id="imageOrigin" fitHeight="470.0" fitWidth="480.0" layoutX="503.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="10.0" />
+                                <ImageView fx:id="whiteBlack" fitHeight="470.0" fitWidth="480.0" pickOnBounds="true"
+                                           preserveRatio="true" AnchorPane.bottomAnchor="0.0"
+                                           AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="10.0"/>
+                                <ImageView fx:id="imageOrigin" fitHeight="470.0" fitWidth="480.0" layoutX="503.0"
+                                           pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0"
+                                           AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="10.0"/>
                             </children>
                         </AnchorPane>
                     </content>
@@ -69,10 +88,10 @@
                     <content>
                         <BarChart fx:id="barChart">
                             <xAxis>
-                                <CategoryAxis side="BOTTOM" />
+                                <CategoryAxis side="BOTTOM"/>
                             </xAxis>
                             <yAxis>
-                                <NumberAxis side="LEFT" />
+                                <NumberAxis side="LEFT"/>
                             </yAxis>
                         </BarChart>
                     </content>
@@ -81,7 +100,10 @@
                     <content>
                         <AnchorPane>
                             <children>
-                                <ImageView fx:id="imgAfterMethod" fitHeight="497.0" fitWidth="924.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0" />
+                                <ImageView fx:id="imgAfterMethod" fitHeight="497.0" fitWidth="924.0" layoutX="14.0"
+                                           layoutY="7.0" pickOnBounds="true" preserveRatio="true"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0"
+                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0"/>
                             </children>
                         </AnchorPane>
                     </content>
@@ -90,29 +112,37 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <Label layoutX="14.0" layoutY="14.0" text="Bernsen" />
-                                <Label layoutX="29.0" layoutY="41.0" text="eps" />
-                                <Label layoutX="14.0" layoutY="75.0" text="radius" />
-                                <TextField fx:id="BernEPS" layoutX="66.0" layoutY="37.0" prefHeight="25.0" prefWidth="79.0" />
-                                <TextField fx:id="BernRadius" layoutX="66.0" layoutY="71.0" prefHeight="25.0" prefWidth="78.0" />
-                                <Label layoutX="211.0" layoutY="14.0" text="Some Thresholds" />
-                                <Label layoutX="239.0" layoutY="41.0" text="Hight" />
-                                <Label layoutX="243.0" layoutY="75.0" text="Low" />
-                                <TextField fx:id="thresholdsHight" layoutX="278.0" layoutY="37.0" prefHeight="25.0" prefWidth="45.0" text="255" />
-                                <TextField fx:id="thresholdsLow" layoutX="278.0" layoutY="71.0" prefHeight="25.0" prefWidth="45.0" text="0" />
-                                <CheckBox fx:id="thresholdsUse" layoutX="323.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="12.0" />
-                                <Label fx:id="dataMethodH" layoutX="334.0" layoutY="41.0" />
-                                <Label fx:id="dataMethodL" layoutX="334.0" layoutY="75.0" />
-                        <Label layoutX="427.0" layoutY="14.0" text="Kmeans" />
-                        <TextField fx:id="clustersKmeans" layoutX="489.0" layoutY="35.0" prefHeight="25.0" prefWidth="55.0" text="1" />
-                        <Label layoutX="427.0" layoutY="40.0" text="clusters" />
-                        <Label layoutX="629.0" layoutY="14.0" text="Watershed" />
-                        <TextField fx:id="floodPoints" layoutX="698.0" layoutY="35.0" prefHeight="25.0" prefWidth="48.0" text="255" />
-                        <TextField fx:id="windowWidth" layoutX="697.0" layoutY="71.0" prefHeight="25.0" prefWidth="50.0" text="150" />
-                        <Label layoutX="645.0" layoutY="41.0" text="flood" />
-                        <Label layoutX="592.0" layoutY="76.0" text="windowWidth" />
-                        <Label layoutX="755.0" layoutY="42.0" text="[1-255]" />
-                        <Label layoutX="755.0" layoutY="75.0" text="[8-255]" />
+                                <Label layoutX="14.0" layoutY="14.0" text="Bernsen"/>
+                                <Label layoutX="29.0" layoutY="41.0" text="eps"/>
+                                <Label layoutX="14.0" layoutY="75.0" text="radius"/>
+                                <TextField fx:id="BernEPS" layoutX="66.0" layoutY="37.0" prefHeight="25.0"
+                                           prefWidth="79.0"/>
+                                <TextField fx:id="BernRadius" layoutX="66.0" layoutY="71.0" prefHeight="25.0"
+                                           prefWidth="78.0"/>
+                                <Label layoutX="211.0" layoutY="14.0" text="Some Thresholds"/>
+                                <Label layoutX="239.0" layoutY="41.0" text="Hight"/>
+                                <Label layoutX="243.0" layoutY="75.0" text="Low"/>
+                                <TextField fx:id="thresholdsHight" layoutX="278.0" layoutY="37.0" prefHeight="25.0"
+                                           prefWidth="45.0" text="255"/>
+                                <TextField fx:id="thresholdsLow" layoutX="278.0" layoutY="71.0" prefHeight="25.0"
+                                           prefWidth="45.0" text="0"/>
+                                <CheckBox fx:id="thresholdsUse" layoutX="323.0" layoutY="14.0" mnemonicParsing="false"
+                                          prefHeight="17.0" prefWidth="12.0"/>
+                                <Label fx:id="dataMethodH" layoutX="334.0" layoutY="41.0"/>
+                                <Label fx:id="dataMethodL" layoutX="334.0" layoutY="75.0"/>
+                                <Label layoutX="427.0" layoutY="14.0" text="Kmeans"/>
+                                <TextField fx:id="clustersKmeans" layoutX="489.0" layoutY="35.0" prefHeight="25.0"
+                                           prefWidth="55.0" text="1"/>
+                                <Label layoutX="427.0" layoutY="40.0" text="clusters"/>
+                                <Label layoutX="629.0" layoutY="14.0" text="Watershed"/>
+                                <TextField fx:id="floodPoints" layoutX="698.0" layoutY="35.0" prefHeight="25.0"
+                                           prefWidth="48.0" text="255"/>
+                                <TextField fx:id="windowWidth" layoutX="697.0" layoutY="71.0" prefHeight="25.0"
+                                           prefWidth="50.0" text="150"/>
+                                <Label layoutX="645.0" layoutY="41.0" text="flood"/>
+                                <Label layoutX="592.0" layoutY="76.0" text="windowWidth"/>
+                                <Label layoutX="755.0" layoutY="42.0" text="[1-255]"/>
+                                <Label layoutX="755.0" layoutY="75.0" text="[8-255]"/>
                             </children>
                         </AnchorPane>
                     </content>
@@ -121,21 +151,29 @@
                     <content>
                         <AnchorPane>
                             <children>
-                                <ImageView fx:id="imgSkeleton" fitHeight="470.0" fitWidth="386.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="587.0" AnchorPane.topAnchor="40.0" />
-                                <ImageView fx:id="imgBeforeSkelet" fitHeight="470.0" fitWidth="386.0" layoutX="521.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+                                <ImageView fx:id="imgSkeleton" fitHeight="470.0" fitWidth="386.0" layoutY="40.0"
+                                           pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="22.0"
+                                           AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="587.0"
+                                           AnchorPane.topAnchor="40.0"/>
+                                <ImageView fx:id="imgBeforeSkelet" fitHeight="470.0" fitWidth="386.0" layoutX="521.0"
+                                           layoutY="40.0" pickOnBounds="true" preserveRatio="true"/>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
-            <Tab text="Color Image">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fx:id="imageViewKMeans" fitHeight="482.0" fitWidth="477.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="loadedImageView" fitHeight="482.0" fitWidth="477.0" layoutX="479.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" />
-                     </children></AnchorPane>
-              </content>
-            </Tab>
+                <Tab text="Color Image">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <ImageView fx:id="imageViewKMeans" fitHeight="482.0" fitWidth="477.0" layoutX="14.0"
+                                           layoutY="21.0" pickOnBounds="true" preserveRatio="true"/>
+                                <ImageView fx:id="loadedImageView" fitHeight="482.0" fitWidth="477.0" layoutX="479.0"
+                                           layoutY="21.0" pickOnBounds="true" preserveRatio="true"
+                                           AnchorPane.rightAnchor="0.0"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
             </tabs>
         </TabPane>
     </children>

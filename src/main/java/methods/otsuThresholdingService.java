@@ -1,166 +1,167 @@
 package methods;
+
 public class otsuThresholdingService {
 
-    public double getOtsuThreshold(int[] grayScaleValues) {
+  public double getOtsuThreshold(int[] grayScaleValues) {
 
-        int[] n = getHistogram(grayScaleValues);
-        double[] p = getProbabilities(n, grayScaleValues.length);
-        double [] Wo = getWo(p);
-        double W = getW(p);
-        double [] W1 = getW1(Wo, W);
-        double UT = getUT(p);
-        double [] Ut = getUt(p);
-        double [] Uo = getUo(Ut, Wo);
-        double [] U1 = getU1(UT, Ut, Uo);
-        double sigmaSqrT = getSigmaSqrT(UT,p);
-        double [] sigmaSqrBt = getSigmaSqrBt(Wo, W1, U1, Uo);
-        double [] eta = getEta(sigmaSqrBt,sigmaSqrT);
+    int[] n = getHistogram(grayScaleValues);
+    double[] p = getProbabilities(n, grayScaleValues.length);
+    double[] Wo = getWo(p);
+    double W = getW(p);
+    double[] W1 = getW1(Wo, W);
+    double UT = getUT(p);
+    double[] Ut = getUt(p);
+    double[] Uo = getUo(Ut, Wo);
+    double[] U1 = getU1(UT, Ut, Uo);
+    double sigmaSqrT = getSigmaSqrT(UT, p);
+    double[] sigmaSqrBt = getSigmaSqrBt(Wo, W1, U1, Uo);
+    double[] eta = getEta(sigmaSqrBt, sigmaSqrT);
 
-        return getMaxIndex(eta);
+    return getMaxIndex(eta);
 
+  }
+
+  private int[] getHistogram(int[] grayScaleValues) {
+    int[] histogram = new int[256];
+
+    for (int index = 0; index < grayScaleValues.length; index++) {
+      histogram[grayScaleValues[index]]++;
+    }
+    return histogram;
+  }
+
+  private double[] getProbabilities(int[] histogram, int totalPixels) {
+
+    double[] probability = new double[histogram.length];
+
+    for (int index = 0; index < probability.length; index++) {
+      probability[index] = ((double) histogram[index]) / ((double) totalPixels);
     }
 
-    private int[] getHistogram(int[] grayScaleValues) {
-        int[] histogram = new int[256];
+    return probability;
+  }
 
-        for (int index = 0; index < grayScaleValues.length; index++) {
-            histogram[grayScaleValues[index]]++;
-        }
-        return histogram;
+  private double[] getWo(double[] probability) {
+
+    double[] Wo = new double[probability.length];
+    Wo[0] = probability[0];
+
+    for (int index = 1; index < Wo.length; index++) {
+      Wo[index] = Wo[index - 1] + probability[index];
     }
 
-    private double[] getProbabilities(int[] histogram, int totalPixels) {
+    return Wo;
+  }
 
-        double[] probability = new double[histogram.length];
+  private double getW(double[] probability) {
 
-        for (int index = 0; index < probability.length; index++) {
-            probability[index] = ((double) histogram[index]) / ((double) totalPixels);
-        }
+    double W = 0;
 
-        return probability;
+    for (int index = 0; index < probability.length; index++) {
+      W += probability[index];
     }
 
-    private double[] getWo(double[] probability) {
+    return W;
+  }
 
-        double[] Wo = new double[probability.length];
-        Wo[0] = probability[0];
+  private double[] getW1(double[] Wo, double W) {
 
-        for (int index = 1; index < Wo.length; index++) {
-            Wo[index] = Wo[index - 1] + probability[index];
-        }
+    double[] W1 = new double[Wo.length];
 
-        return Wo;
+    for (int index = 0; index < W1.length; index++) {
+      W1[index] = W - Wo[index];
     }
 
-    private double getW(double[] probability) {
+    return W1;
+  }
 
-        double W = 0;
+  private double getUT(double[] probability) {
 
-        for (int index = 0; index < probability.length; index++) {
-            W += probability[index];
-        }
+    double UT = 0;
 
-        return W;
+    for (int index = 0; index < probability.length; index++) {
+      UT += (((double) index) * probability[index]);
     }
 
-    private double[] getW1(double[] Wo, double W) {
+    return UT;
 
-        double[] W1 = new double[Wo.length];
+  }
 
-        for (int index = 0; index < W1.length; index++) {
-            W1[index] = W - Wo[index];
-        }
+  private double[] getUt(double[] probability) {
 
-        return W1;
+    double[] Ut = new double[probability.length];
+
+    Ut[0] = 0;
+    for (int index = 1; index < probability.length; index++) {
+      Ut[index] = Ut[index - 1] + (((double) index) * probability[index]);
     }
 
-    private double getUT(double[] probability) {
+    return Ut;
+  }
 
-        double UT = 0;
+  private double[] getUo(double[] Ut, double[] Wo) {
 
-        for (int index = 0; index < probability.length; index++) {
-            UT += (((double) index) * probability[index]);
-        }
+    double[] Uo = new double[Ut.length];
 
-        return UT;
-
+    for (int index = 0; index < Ut.length; index++) {
+      Uo[index] = Ut[index] / Wo[index];
     }
 
-    private double[] getUt(double[] probability) {
+    return Uo;
 
-        double[] Ut = new double[probability.length];
+  }
 
-        Ut[0] = 0;
-        for (int index = 1; index < probability.length; index++) {
-            Ut[index] = Ut[index - 1] + (((double) index) * probability[index]);
-        }
+  private double[] getU1(double UT, double[] Ut, double[] Uo) {
 
-        return Ut;
+    double[] U1 = new double[Ut.length];
+
+    for (int index = 0; index < U1.length; index++) {
+      U1[index] = (UT - Ut[index]) / (1 - Uo[index]);
     }
 
-    private double[] getUo(double[] Ut, double[] Wo) {
+    return U1;
 
-        double[] Uo = new double[Ut.length];
+  }
 
-        for (int index = 0; index < Ut.length; index++) {
-            Uo[index] = Ut[index] / Wo[index];
-        }
+  private double getSigmaSqrT(double UT, double[] probability) {
 
-        return Uo;
+    double sigmaSqrT = 0;
 
+    for (int index = 0; index < probability.length; index++) {
+      sigmaSqrT += (Math.pow((index - UT), 2) * probability[index]);
     }
 
-    private double[] getU1(double UT, double[] Ut, double[] Uo) {
+    return sigmaSqrT;
 
-        double[] U1 = new double[Ut.length];
+  }
 
-        for (int index = 0; index < U1.length; index++) {
-            U1[index] = (UT - Ut[index]) / (1 - Uo[index]);
-        }
+  private double[] getSigmaSqrBt(double[] Wo, double[] W1, double[] U1, double[] Uo) {
+    double sigmaSqrBt[] = new double[Wo.length];
 
-        return U1;
-
+    for (int index = 0; index < sigmaSqrBt.length; index++) {
+      sigmaSqrBt[index] = Wo[index] * W1[index] * Math.pow((U1[index] - Uo[index]), 2);
     }
 
-    private double getSigmaSqrT(double UT, double[] probability) {
+    return sigmaSqrBt;
+  }
 
-        double sigmaSqrT = 0;
+  private int getMaxIndex(double[] array) {
 
-        for (int index = 0; index < probability.length; index++) {
-            sigmaSqrT += (Math.pow((index - UT), 2) * probability[index]);
-        }
-
-        return sigmaSqrT;
-
+    int maxIndex = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (array[maxIndex] < array[i]) {
+        maxIndex = i;
+      }
     }
+    return maxIndex;
 
-    private double[] getSigmaSqrBt(double[] Wo, double[] W1, double[] U1, double[] Uo) {
-        double sigmaSqrBt[] = new double[Wo.length];
+  }
 
-        for (int index = 0; index < sigmaSqrBt.length; index++) {
-            sigmaSqrBt[index] = Wo[index] * W1[index] * Math.pow((U1[index] - Uo[index]), 2);
-        }
-
-        return sigmaSqrBt;
+  private double[] getEta(double[] sigmaSqrBt, double sigmaSqrT) {
+    double eta[] = new double[sigmaSqrBt.length];
+    for (int index = 0; index < sigmaSqrBt.length; index++) {
+      eta[index] = sigmaSqrBt[index] / sigmaSqrT;
     }
-
-    private int getMaxIndex(double [] array){
-
-        int maxIndex = 0;
-        for(int i=0;i<array.length;i++){
-            if(array[maxIndex]<array[i]){
-                maxIndex=i;
-            }
-        }
-        return maxIndex;
-
-    }
-
-    private double[] getEta(double[] sigmaSqrBt, double sigmaSqrT) {
-        double eta[] = new double[sigmaSqrBt.length];
-        for(int index= 0; index<sigmaSqrBt.length;index++){
-            eta[index] = sigmaSqrBt[index]/sigmaSqrT;
-        }
-        return eta;
-    }
+    return eta;
+  }
 }
